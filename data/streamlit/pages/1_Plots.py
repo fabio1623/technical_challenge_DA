@@ -1,18 +1,51 @@
-import streamlit as st
 import pandas as pd
-import altair as alt
-
-def display_chart(dataframe, selected_feature, selected_gas):
-    dataframe = dataframe[dataframe['gas_type'].isin(selected_gas)]
-    st.bar_chart(dataframe, x='gas_type', y=selected_feature)
+import seaborn as sns
+import matplotlib.pyplot as plt
+import streamlit as st
 
 
-data = pd.read_csv('../cleaned_data.csv')
+data = pd.read_csv('../cleaned_data_visualization.csv')
 
-selected_gas = st.multiselect("Select Gas Type", data['gas_type'].unique())
+tab1, tab2 = st.tabs(['Fuel Consumption by Feature', 'Average Fuel Consumption by Feature'])
 
-filtered_columns = [col for col in data.columns if col != 'gas_type']
-selected_feature = st.selectbox("Select a column to plot (y-axis)", filtered_columns)
+with tab1:
+    x_features1 = ['distance', 'speed', 'temp_inside', 'temp_outside']
 
-if selected_gas:
-        display_chart(data, selected_feature, selected_gas)
+    selected_feature1 = st.selectbox("Select a feature for the x-axis:", x_features1)
+
+    # create the Streamlit app
+    st.title(f'Fuel Consumption by {selected_feature1.capitalize()} and Gas Type')
+    st.write(f'This app displays a line chart of fuel consumption by {selected_feature1.capitalize()} and gas type.')
+
+    with st.spinner('Loading...'):
+        # plot the line chart
+        fig, ax = plt.subplots()
+        sns.lineplot(data=data, x=selected_feature1, y='consume', hue='gas_type', ax=ax)
+
+        # add labels and title
+        ax.set_xlabel(f'{selected_feature1.capitalize()}')
+        ax.set_ylabel('Fuel Consumption (L/100km)')
+
+        # display the chart in the Streamlit app
+        st.pyplot(fig)
+
+with tab2:
+    x_features2 = ['ac', 'rain', 'sun', 'snow']
+
+    selected_feature2 = st.selectbox("Select a feature for the x-axis:", x_features2)
+
+    # create the Streamlit app
+    st.title(f'Average Fuel Consumption by {selected_feature2.capitalize()} and Gas Type')
+    st.write(f'This app displays a bar chart of fuel consumption by {selected_feature2.capitalize()} and gas type.')
+
+    with st.spinner('Loading...'):
+        # plot the bar chart
+        fig, ax = plt.subplots()
+        sns.barplot(data=data, x=selected_feature2, y='consume', hue='gas_type', ci=None, ax=ax)
+
+        # add labels and title
+        ax.set_xlabel(selected_feature2.capitalize())
+        ax.set_ylabel('Average Fuel Consumption (L/100km)')
+
+        # display the chart in the Streamlit app
+        st.pyplot(fig)
