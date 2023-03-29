@@ -24,8 +24,8 @@ def display_heatmap(dataframe):
             st.write(f)
 
 
-data_visualization = pd.read_csv('../cleaned_data_visualization.csv')
-data_modeling = pd.read_csv('../cleaned_data_modeling.csv')
+data_visualization = pd.read_csv('data/cleaned_data_visualization.csv')
+data_modeling = pd.read_csv('data/cleaned_data_modeling.csv')
 
 st.title('cleaned_data.csv')
 

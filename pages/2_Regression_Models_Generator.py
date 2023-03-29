@@ -103,7 +103,7 @@ def compare_and_fit_models(models_with_name_list, X, y):
 def save_models_with_scaler(selected_algorithm_names, models_with_scaler_list):
     for algorithm_name, model_with_scaler in zip(selected_algorithm_names, models_with_scaler_list):
         algorithm_name = algorithm_name.lower().replace(' ', '_')
-        with open(f'../models/regression/{algorithm_name}.pkl', 'wb') as file:
+        with open(f'models/regression/{algorithm_name}.pkl', 'wb') as file:
             pickle.dump(model_with_scaler, file)
 
 
@@ -169,7 +169,7 @@ def display_algorithms_comparison(df):
 
 st.title('Regression Models Generator [consume]')
 
-data = pd.read_csv('../cleaned_data_modeling.csv')
+data = pd.read_csv('data/cleaned_data_modeling.csv')
 
 tab1, tab2 = st.tabs(['Dataframe', 'Models Generator'])
 

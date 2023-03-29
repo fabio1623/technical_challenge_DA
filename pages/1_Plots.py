@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 
-data = pd.read_csv('../cleaned_data_visualization.csv')
+data = pd.read_csv('data/cleaned_data_visualization.csv')
 
 tab1, tab2 = st.tabs(['Fuel Consumption by Feature', 'Average Fuel Consumption by Feature'])
 
