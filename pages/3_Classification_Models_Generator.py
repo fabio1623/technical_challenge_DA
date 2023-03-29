@@ -14,6 +14,10 @@ from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, r
 import matplotlib.pyplot as plt
 import pickle
 
+@st.cache_data
+def load_data(path):
+     return pd.read_csv(path)
+
 def display_data_and_descriptions(df, title):
     st.subheader(title)
     
@@ -181,7 +185,7 @@ def display_algorithms_comparison(df):
 
 st.title('Classification Models Generator [gas_type]')
 
-data = pd.read_csv('data/cleaned_data_modeling.csv')
+data = load_data('data/cleaned_data_modeling.csv')
 
 tab1, tab2 = st.tabs(['Dataframe', 'Models Generator'])
 

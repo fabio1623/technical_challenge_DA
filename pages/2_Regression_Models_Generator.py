@@ -13,6 +13,9 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import pickle
 
+@st.cache_data
+def load_data(path):
+     return pd.read_csv(path)
 
 def display_data_and_descriptions(df, title):
     st.subheader(title)
@@ -30,7 +33,6 @@ def display_data_and_descriptions(df, title):
         st.write(df.shape)
         
     st.dataframe(df, use_container_width=True)
-
 
 def compare_and_fit_models(models_with_name_list, X, y):
     fitted_models_with_scaler_list = []
@@ -106,7 +108,6 @@ def save_models_with_scaler(selected_algorithm_names, models_with_scaler_list):
         with open(f'models/regression/{algorithm_name}.pkl', 'wb') as file:
             pickle.dump(model_with_scaler, file)
 
-
 def display_algorithms_comparison(df):
     df = df.sample(frac=1)
 
@@ -169,7 +170,7 @@ def display_algorithms_comparison(df):
 
 st.title('Regression Models Generator [consume]')
 
-data = pd.read_csv('data/cleaned_data_modeling.csv')
+data = load_data('data/cleaned_data_modeling.csv')
 
 tab1, tab2 = st.tabs(['Dataframe', 'Models Generator'])
 

@@ -4,10 +4,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+@st.cache_data
+def load_data(path):
+     return pd.read_csv(path)
+
 def display_data(df):
     st.write(df.shape)
     st.dataframe(df, use_container_width=True)
 
+@st.cache_data
 def display_heatmap(dataframe):
     with st.spinner('Loading...'):
             corr=dataframe.corr()
@@ -24,8 +29,8 @@ def display_heatmap(dataframe):
             st.write(f)
 
 
-data_visualization = pd.read_csv('data/cleaned_data_visualization.csv')
-data_modeling = pd.read_csv('data/cleaned_data_modeling.csv')
+data_visualization = load_data('data/cleaned_data_visualization.csv')
+data_modeling = load_data('data/cleaned_data_modeling.csv')
 
 st.title('cleaned_data.csv')
 
